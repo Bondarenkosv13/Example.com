@@ -2,8 +2,20 @@
 namespace App\Controllers;
 class AuthController
 {
-    public function __construct()
+    public function login()
     {
-        echo "AuthController";
+        echo "AuthController method login";
+    }
+    public function register()
+    {
+        echo "AuthController method register";
+    }
+    public function verify()
+    {
+        echo "AuthController method verify";
+    }
+    public function logout()
+    {
+        echo "AuthController method logout";
     }
 }
