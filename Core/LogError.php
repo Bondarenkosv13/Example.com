@@ -19,6 +19,16 @@ class LogError
 
     }
 
+    public static function Error422($error)
+    {
+        $str = date(DATE_RFC822) . ", " . $error . ".\n";
+        LogError::writeError('422.txt', $str);
+
+        LogError::Header();
+
+    }
+
+
     public static function Error404($error)
     {
         $str = date(DATE_RFC822) . ", " . $error . ".\n";

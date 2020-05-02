@@ -14,20 +14,20 @@ class PostsController
     {
         echo "PostsController method store";
     }
-    public function update()
+    public function update($id)
     {
-        echo "PostsController method update";
+        echo "PostsController method update and params $id";
     }
-    public function edit()
+    public function edit($id)
     {
-        echo "PostsController method edit";
+        echo "PostsController method edit and params $id";
     }
-    public function delete()
+    public function delete($id)
     {
-        echo "PostsController method delete";
+        echo "PostsController method delete and params $id";
     }
-    public function show()
+    public function show($id)
     {
-        echo "PostsController method show";
+        echo "PostsController method show and params $id";
     }
 }

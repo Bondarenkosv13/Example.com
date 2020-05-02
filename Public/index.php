@@ -7,11 +7,11 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Core\LogError;
 use Core\Router;
-use App\Controllers\PostsController;
 
 
 $route = new Router();
 require_once dirname(__DIR__) . '/Routes/Web.php';
+
 try
 {
     $route->dispatch($_SERVER['REQUEST_URI']);
