@@ -77,10 +77,10 @@ class Router
                     $this->params
                     );
                 } else {
-                    LogError::Error422($controller);
+                    LogError::error422($controller);
                 }
         } else {
-            LogError::Error404($_SERVER['REQUEST_URI']);
+            LogError::error404($_SERVER['REQUEST_URI']);
         }
     }
 }

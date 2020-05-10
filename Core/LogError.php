@@ -1,6 +1,6 @@
 <?php
 namespace Core;
-
+include_once dirname(__DIR__) . '/Config/constant.php';
 class LogError
 {
 
@@ -11,36 +11,32 @@ class LogError
         fclose($file);
     }
 
-    public static function ErrorRoute($str)
+    public static function errorRoute($str)
     {
         $str = date(DATE_RFC822) . ", " . $str . ".\n";
         LogError::writeError('ErrorRoute.txt', $str);
-
-
     }
 
-    public static function Error422($error)
+    public static function error422($error)
     {
         $str = date(DATE_RFC822) . ", " . $error . ".\n";
         LogError::writeError('422.txt', $str);
 
-        LogError::Header();
-
+        LogError::header();
     }
 
 
-    public static function Error404($error)
+    public static function error404($error)
     {
         $str = date(DATE_RFC822) . ", " . $error . ".\n";
         LogError::writeError('404.txt', $str);
 
-        LogError::Header();
-
+        LogError::header();
     }
 
-    public static function Header()
+    public static function header()
     {
-        header("Location: http://example.com/home");
+        header("Location: " . HOME);
         exit();
     }
 

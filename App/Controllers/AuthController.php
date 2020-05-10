@@ -1,5 +1,7 @@
 <?php
 namespace App\Controllers;
+use Core\View;
+
 class AuthController
 {
     public function login()
@@ -8,7 +10,9 @@ class AuthController
     }
     public function register()
     {
-        echo "AuthController method register";
+        View::render('Parts/header.php', ['title' => 'Registration']);
+        View::render('Auth/registration.php');
+        View::render('Parts/footer.php');
     }
     public function verify()
     {

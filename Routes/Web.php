@@ -1,6 +1,7 @@
 <?php
 $route->add('', ['controller' => 'HomeController', 'action' => 'index']);
 $route->add('home', ['controller' => 'HomeController', 'action' => 'index']);
+$route->add('create', ['controller' => 'HomeController', 'action' => 'create']);
 
 // Auth
 $route->add('login', ['controller' => 'AuthController', 'action' => 'login']);

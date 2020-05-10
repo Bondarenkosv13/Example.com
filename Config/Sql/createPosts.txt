@@ -1,0 +1,11 @@
+create table posts (
+`id` INT(11) primary key auto_increment,
+`user_id` INT(11) not null,
+`title` varchar(254) not null,
+`content` text not null,
+`image` text not null,
+`created_at` timestamp NULL default current_timestamp,
+foreign key (user_id) references `users` (id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE
+) engine=InnoDB default charset=utf8;

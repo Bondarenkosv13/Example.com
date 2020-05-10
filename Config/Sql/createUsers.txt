@@ -1,0 +1,9 @@
+create table users (
+`id` INT(11) primary key auto_increment,
+`first_name` varchar(55) not null,
+`last_name` varchar(45) not null,
+`email` varbinary(155) not null unique,
+`password` text not null,
+`birthday` DATE not null,
+`created_at` timestamp NULL default current_timestamp
+) engine=InnoDB default charset=utf8;
