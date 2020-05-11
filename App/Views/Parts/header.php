@@ -20,12 +20,35 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/registration">Registration</a>
-            </li>
+<?php       if(\App\Helpers\SessionHelper::isUserLoggedIn())
+            { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registration">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">|</a>
+                </li>
+<?php       } else
+            { ?>
+                <li class="nav-item">
+                    <a class="nav-link"><?php print_r($_SESSION['user_data']['first_name']); ?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php \App\Helpers\SessionHelper::destroyUserData();?>>">exit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">|</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts/create">Create post</a>
+                </li>
+<?php        }?>
         </ul>
         <?php $table = $table??'users';
         if ($table !== 'users') { ?>

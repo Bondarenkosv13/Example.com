@@ -3,13 +3,12 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Validation\UserValidator;
-use Core\LogError;
 use Core\View;
+
+include_once dirname(__DIR__) . '/../Config/function.php';
 
 class UserController
 {
-    public $data = [];
-
     public function store()
     {
 
@@ -17,18 +16,21 @@ class UserController
         {
             $fields[$key] = trim($value);
         }
-        $this->data = $fields;
         $userValidation = new UserValidator();
+        $user = new User();
+        $userParams = $user->checkAll();
 
-        if ($userValidation->storeValidation($fields))
+        if ($userValidation->storeValidation($fields) && $userValidation->validatorEmail($userParams, $fields['email']))
         {
-            $user = new User();
             $user->addUser($fields);
-            LogError::header();
+            /**
+             * way - function header('Location: ...')
+             * path - Config/function
+             */
+            way('login');
         }
         else {
-
-            $data = $this->data;
+            $data = $fields;
             $error = $userValidation->getErrors();
 
             View::render('Parts/header.php', ['title' => 'Registration']);

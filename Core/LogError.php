@@ -1,6 +1,7 @@
 <?php
 namespace Core;
-include_once dirname(__DIR__) . '/Config/constant.php';
+
+include_once dirname(__DIR__) . '/Config/function.php';
 class LogError
 {
 
@@ -34,10 +35,12 @@ class LogError
         LogError::header();
     }
 
+    /**
+     *  way - it is path to home (header('Location: ...')
+     */
     public static function header()
     {
-        header("Location: " . HOME);
-        exit();
+        way('home');
     }
 
 }

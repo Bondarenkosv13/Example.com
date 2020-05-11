@@ -1,10 +1,14 @@
 <?php
 namespace App\Models;
 
+use App\Helpers\SessionHelper;
 use Core\Model;
+use PDO;
 
 class User extends Model
 {
+    private $table = 'users';
+
     public function __construct()
     {
         $this->connectDB();
@@ -12,18 +16,31 @@ class User extends Model
 
     public function addUser($params)
     {
-        extract($params);
-
-        $sql = "INSERT INTO `users`(`first_name`, `last_name`, `email`, `password`, `birthday`) 
+        $sql = "INSERT INTO `{$this->table}`(`first_name`, `last_name`, `email`, `password`, `birthday`) 
                 VALUES (:first_name, :last_name, :email, :password, :birthday)";
-        $param = [
-            'first_name'    => $first_name,
-            'last_name'     => $last_name,
-            'email'         => $email,
-            'password'      => $password,
-            'birthday'      => $birthday
-        ];
+        $params['password'] = password_hash($params['password'], PASSWORD_DEFAULT);
         $user = $this->dbh->prepare($sql);
-        $user->execute($param);
+        $user->execute($params);
+        SessionHelper::setUser($params);
+        unset($_SESSION['user_data']['password']);
     }
+
+    public function checkAll()
+    {
+        $params = $this->dbh->prepare("SELECT * FROM `users` ");;
+        $params->execute();
+        $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
+        return $userParams;
+    }
+
+    public function checkUser($email)
+    {
+        $params = $this->dbh->prepare("SELECT * FROM `users` WHERE email=:email");;
+        $params->execute([':email' => $email]);
+        $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
+        return $userParams[0];
+
+    }
+
+
 }

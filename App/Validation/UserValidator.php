@@ -1,10 +1,8 @@
 <?php
 namespace App\Validation;
 
-use Core\Model;
-use \PDO;
 
-class UserValidator extends Model
+class UserValidator
 {
     protected $errors = [
         'first_name_error'  => 'Name must have from 2 to 55 letters and have only English or Russian letters',
@@ -22,11 +20,6 @@ class UserValidator extends Model
         'password'      => '/^\S*(?=\S{2,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/'
     ];
 
-    public function __construct()
-    {
-        $this->connectDB();
-    }
-
     public function storeValidation ($fields)
     {
         foreach ($fields as $key => $field)
@@ -39,14 +32,28 @@ class UserValidator extends Model
         return empty($this->errors);
     }
 
-    public function checkEmail ($email)
+    public function validatorEmail ($userParams, $email)
     {
+            foreach ($userParams as $userParam)
+            {
+                if($userParam['email'] === $email)
+                {
+                   $this->errors['email_error'] = 'This email already exists';
+                   return false;
+                }
+            }
+        return true;
+    }
 
-        $email_all = $this->dbh->prepare("SELECT * FROM 'users' WHERE email=:email");;
-        $email_all->execute([":email"=>$email]);
-        $user = $email_all->fetch(PDO::FETCH_ASSOC);
-
-        return !empty($user) ? $user : false;
+    public function suchAnEmailExists($userParams, $email)
+    {
+        foreach ($userParams as $userParam) {
+            if($userParam['email'] === $email)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getErrors()
