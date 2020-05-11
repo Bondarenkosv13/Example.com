@@ -37,7 +37,7 @@
                     <a class="nav-link"><?php print_r($_SESSION['user_data']['first_name']); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php \App\Helpers\SessionHelper::destroyUserData();?>>">exit</a>
+                    <a class="nav-link" href="/logout">exit</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link">|</a>

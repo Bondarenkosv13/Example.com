@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+
 use App\Helpers\SessionHelper;
 use App\Models\User;
 use App\Validation\UserValidator;
@@ -60,6 +61,7 @@ class AuthController
     }
     public function logout()
     {
-        echo "AuthController method logout";
+        SessionHelper::destroyUserData();
+        way('');
     }
 }
