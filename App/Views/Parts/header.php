@@ -29,18 +29,18 @@
                     <a class="nav-link" href="/registration">Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">|</a>
+                    <a class="nav-link text-white">|</a>
                 </li>
 <?php       } else
             { ?>
                 <li class="nav-item">
-                    <a class="nav-link"><?php print_r($_SESSION['user_data']['first_name']); ?></a>
+                    <a class="nav-link text-white"><?php print_r($_SESSION['user_data']['first_name']); ?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">exit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">|</a>
+                    <a class="nav-link text-white">|</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/posts">Posts</a>
@@ -52,7 +52,7 @@
         </ul>
         <?php $table = $table??'users';
         if ($table !== 'users') { ?>
-        <ul class="navbar-nav align-end">
+        <ul class="nav bar-nav align-end">
             <li class="nav-item">
                 <a class="btn btn-primary" href="create"><?=$table?>CREATE TABLES  <span class="sr-only">(current)</span></a>
             </li>
@@ -60,5 +60,11 @@
         <?php } ?>
     </div>
 </nav>
+<?php if(!empty($_SESSION['notification'])) { ?>
+<div class="alert alert-primary " style="text-align: center">
+<?php   echo $_SESSION['notification'];
+        unset($_SESSION['notification']);?>
+</div>
+<?php }?>
 
 

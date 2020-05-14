@@ -2,7 +2,7 @@
         <h1 class="text-center">User registration</h1>
         <form method="POST" action="/user/store">
             <div class="form-group">
-                <label for="first_name">First name</label>
+                <label for="form-group">First name</label>
                 <input type="text"
                        class="form-control"
                        name="first_name"
@@ -14,7 +14,7 @@
                 <?php }?>
             </div>
             <div class="form-group">
-                <label for="last_name">Last name</label>
+                <label for="form-group">Last name</label>
                 <input type="text"
                        class="form-control"
                        name="last_name"
@@ -26,7 +26,7 @@
                     <?php }?>
             </div>
             <div class="form-group">
-                <label for="email">E-mail</label>
+                <label for="form-group">E-mail</label>
                 <input type="email"
                        class="form-control"
                        name="email"
@@ -38,7 +38,7 @@
                 <?php }?>
             </div>
             <div class="form-group">
-                <label for="birthday">Birthday</label>
+                <label for="form-group">Birthday</label>
                 <input type="date"
                        class="form-control"
                        name="birthday"
@@ -50,7 +50,7 @@
                 <?php }?>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="form-group">Password</label>
                 <input type="password"
                        class="form-control"
                        name="password"

@@ -1,12 +1,14 @@
 <div class="container align-content-center  col-md-4">
+    <?php if(!empty($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" role = "alert" ><?php
+            echo $_SESSION['error'];
+            unset($_SESSION['error']);?></div >
+    <?php }?>
     <h1 class="text-center">User login</h1>
     <form method="POST" action="/auth">
-        <?php if(!empty($_SESSION['error'])) { ?>
-            <div class="alert alert-danger" role = "alert" ><?= $_SESSION['error'] ?></div >
-    <?php }?>
         <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="text"
+            <label for="form-group">E-mail</label>
+            <input type="email"
                    class="form-control"
                    name="email"
                    id="email"
@@ -14,7 +16,7 @@
                    value="<?php echo !empty($_SESSION['user_data']['email']) ? $_SESSION['user_data']['email'] : ''; ?>">
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="form-group">Password</label>
             <input type="password"
                    class="form-control"
                    name="password"

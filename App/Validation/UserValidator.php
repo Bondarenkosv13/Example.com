@@ -2,7 +2,9 @@
 namespace App\Validation;
 
 
-class UserValidator
+use Core\Validator;
+
+class UserValidator extends Validator
 {
     protected $errors = [
         'first_name_error'  => 'Name must have from 2 to 55 letters and have only English or Russian letters',
@@ -55,10 +57,4 @@ class UserValidator
         }
         return false;
     }
-
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
 }

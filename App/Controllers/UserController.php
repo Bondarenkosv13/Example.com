@@ -30,11 +30,10 @@ class UserController
             way('login');
         }
         else {
-            $data = $fields;
             $error = $userValidation->getErrors();
 
             View::render('Parts/header.php', ['title' => 'Registration']);
-            View::render('Auth/registration.php',['data' => $data, 'error' => $error]);
+            View::render('Auth/registration.php',['data' => $fields, 'error' => $error]);
             View::render('Parts/footer.php');
         };
 

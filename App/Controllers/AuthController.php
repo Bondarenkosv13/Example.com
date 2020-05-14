@@ -24,7 +24,7 @@ class AuthController
     }
     public function verify()
     {
-        unset($_SESSION['error']);
+
         foreach ($_POST as $key => $value)
         {
             $fields[$key] = trim($value);
