@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\CreateTable;
+use App\Models\Post;
 use App\Validation\TableValidator;
 use Core\View;
 class HomeController
@@ -10,8 +11,14 @@ class HomeController
     {
         $tables = new TableValidator();
         $table = $tables->checkTable();
+
+        $posts = new Post();
+        $posts = $posts->getAllPost();
+
+
+
         View::render('Parts/header.php', ['title' => 'Home', 'table' => $table]);
-        View::render('Home/index.php');
+        View::render('Home/index.php', ['posts' => $posts]);
         View::render('Parts/footer.php');
     }
 

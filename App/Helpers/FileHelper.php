@@ -32,9 +32,9 @@ class FileHelper
 
     protected function createFolder($id)
     {
-        if(!file_exists(PATH_IMAGE . "/{$id}"))
+        if(!file_exists(PATH_IMAGE . "Image/{$id}"))
         {
-            mkdir(PATH_IMAGE . "/$id", 0755, true);
+            mkdir(PATH_IMAGE . "Image/$id", 0755, true);
         }
     }
 }

@@ -32,5 +32,12 @@ class Post extends Model
 
     }
 
+    public function getAllPost()
+    {
+        $post = $this->dbh->prepare("SELECT * FROM `{$this->table}`");;
+        $post->execute();
+        $dataPost = $post->fetchAll(PDO::FETCH_ASSOC);
+        return $dataPost;
 
+    }
 }

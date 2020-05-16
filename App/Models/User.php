@@ -39,7 +39,14 @@ class User extends Model
         $params->execute([':email' => $email]);
         $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
         return $userParams[0];
+    }
 
+    public function getUserFromId($id)
+    {
+        $params = $this->dbh->prepare("SELECT * FROM `{$this->table}` WHERE id=:id");;
+        $params->execute([':id' => $id]);
+        $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
+        return $userParams[0];
     }
 
 

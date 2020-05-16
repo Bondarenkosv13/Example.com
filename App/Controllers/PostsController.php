@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Helpers\FileHelper;
 use App\Helpers\SessionHelper;
 use App\Models\Post;
+use App\Models\User;
 use App\Validation\Post\CreatePostValidator;
 use Core\View;
 
@@ -86,15 +87,21 @@ class PostsController
     }
     public function show($id)
     {
+        if($this->post->getPostById($id) == null)
+        {
+            $_SESSION['notification'] = 'This is article is not find!';
+            /**
+             * way - redirect at home
+             */
+            way('home');
+        }
+        $user=new User();
         $post = $this->post->getPostById($id)[0];
+        $user = $user->getUserFromId($post['user_id']);
+        $post['name'] = " " . $user['first_name']  . ' ' . $user['last_name'];
         View::render('Parts/header.php', ['title' => "Article #{$id}"]);
-        View::render('Post/show.php', [
-            'title'     => $post['title'],
-            'content'   => $post['content'],
-            'image'     => PATH_IMAGE . $post['image']
-            ]);
+        View::render('Post/show.php', $post);
         View::render('Parts/footer.php');
-       print_r($this->post->getPostById($id)[0]);
     }
 
     /**
