@@ -27,7 +27,7 @@ class User extends Model
 
     public function checkAll()
     {
-        $params = $this->dbh->prepare("SELECT * FROM `users` ");;
+        $params = $this->dbh->prepare("SELECT * FROM `{$this->table}` ");;
         $params->execute();
         $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
         return $userParams;
@@ -35,7 +35,7 @@ class User extends Model
 
     public function checkUser($email)
     {
-        $params = $this->dbh->prepare("SELECT * FROM `users` WHERE email=:email");;
+        $params = $this->dbh->prepare("SELECT * FROM `{$this->table}` WHERE email=:email");;
         $params->execute([':email' => $email]);
         $userParams = $params->fetchAll(PDO::FETCH_ASSOC);
         return $userParams[0];

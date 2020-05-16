@@ -3,12 +3,22 @@ namespace App\Controllers;
 
 use App\Helpers\FileHelper;
 use App\Helpers\SessionHelper;
+use App\Models\Post;
 use App\Validation\Post\CreatePostValidator;
 use Core\View;
 
 include_once dirname(__DIR__) . '/../Config/function.php';
+include_once dirname(__DIR__) . '/../Config/constant.php';
 class PostsController
 {
+
+    private $post;
+
+    public function __construct()
+    {
+        $this->post = new Post();
+    }
+
     public function index()
     {
         echo "PostsController method index";
@@ -25,16 +35,14 @@ class PostsController
     public function store()
     {
         $this->before();
-        $post = new CreatePostValidator();
-
         $fields = $_POST;
-
+        $postValidator = new CreatePostValidator();
         /**
          * Valid the title and the content in post create
          */
-        if(!$post->storeValidation($fields))
+        if(!$postValidator->storeValidation($fields))
         {
-            $error = $post->getErrors();
+            $error = $postValidator->getErrors();
 
             View::render('Parts/header.php', ['title' => 'Create post']);
             View::render('Post/create.php', [
@@ -48,7 +56,7 @@ class PostsController
         /**
          * Valid image in post create (image must be added)
          */
-        if($post->imageValidation($_FILES))
+        if($postValidator->imageValidation($_FILES))
         {
             View::render('Parts/header.php', ['title' => 'Create post']);
             View::render('Post/create.php', ['title'=> $fields['title'], 'content'=>$fields['content']]);
@@ -58,10 +66,11 @@ class PostsController
 
         $file = new FileHelper();
         $pathImage = $file->upload($_FILES['image']);
+        $fields['image'] = $pathImage;
+        $fields['user_id']    = SessionHelper::getUserId();
 
-        $file->remove($pathImage);
-
-
+        $id = $this->post->addPost($fields);
+        way('posts/' . $id);
     }
     public function update($id)
     {
@@ -77,7 +86,15 @@ class PostsController
     }
     public function show($id)
     {
-        echo "PostsController method show and params $id";
+        $post = $this->post->getPostById($id)[0];
+        View::render('Parts/header.php', ['title' => "Article #{$id}"]);
+        View::render('Post/show.php', [
+            'title'     => $post['title'],
+            'content'   => $post['content'],
+            'image'     => PATH_IMAGE . $post['image']
+            ]);
+        View::render('Parts/footer.php');
+       print_r($this->post->getPostById($id)[0]);
     }
 
     /**

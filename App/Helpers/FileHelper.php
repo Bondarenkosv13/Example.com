@@ -9,24 +9,24 @@ class FileHelper
      */
     public function upload($file)
     {
-//        $id=SessionHelper::getUserId();
-//        $pathImage = "/{$id}/" . time() . '_' . $file['name'];
-//        $absolutePathImage = PATH_IMAGE . $pathImage;
-//        $this->createFolder($id);
-//
-//        if(move_uploaded_file($file['tmp_name'], $absolutePathImage))
-//        {
-//            return $absolutePathImage;
-//        }
-//
-//        return "";
+        $id=SessionHelper::getUserId();
+        $pathImage = "Image/{$id}/" . time() . '_' . $file['name'];
+        $absolutePathImage = PATH_IMAGE . $pathImage;
+        $this->createFolder($id);
+
+        if(move_uploaded_file($file['tmp_name'], $absolutePathImage))
+        {
+            return $pathImage;
+        }
+
+        return "";
     }
 
     public function remove($path)
     {
-        if(file_exists($path))
+        if(file_exists(PATH_IMAGE .$path))
         {
-            unlink($path);
+            unlink(PATH_IMAGE . $path);
         }
     }
 

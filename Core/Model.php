@@ -5,9 +5,9 @@ use App\Config;
 
 abstract class Model
 {
-    public $dbh = null;
+    protected $dbh = null;
 
-    public function connectDB()
+    protected function connectDB()
     {
         $dsn = "mysql:host=" . Config::host . ";dbname=" . Config::db_name . ";charset=" . Config::charset;
 

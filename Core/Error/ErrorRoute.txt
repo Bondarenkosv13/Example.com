@@ -123,3 +123,4 @@ Mon, 11 May 20 13:19:38 +0300, /var/www/example.com/html/App/Models/User.php, 22
 Mon, 11 May 20 13:20:20 +0300, /var/www/example.com/html/App/Models/User.php, 22, 23000, SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Bondarenkosv13@gmail.com' for key 'email'.
 Mon, 11 May 20 13:20:40 +0300, /var/www/example.com/html/App/Models/User.php, 22, 23000, SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Bondarenkosv13@gmail.com' for key 'email'.
 Mon, 11 May 20 13:21:00 +0300, /var/www/example.com/html/App/Models/User.php, 22, 23000, SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Bondarenkosv13@gmail.com' for key 'email'.
+Thu, 14 May 20 23:12:27 +0300, /var/www/example.com/html/App/Models/Post.php, 22, HY093, SQLSTATE[HY093]: Invalid parameter number: parameter was not defined.
