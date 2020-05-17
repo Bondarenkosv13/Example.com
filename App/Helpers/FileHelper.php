@@ -24,7 +24,8 @@ class FileHelper
 
     public function remove($path)
     {
-        if(file_exists(PATH_IMAGE .$path))
+
+        if(file_exists(PATH_IMAGE . $path))
         {
             unlink(PATH_IMAGE . $path);
         }
@@ -37,4 +38,6 @@ class FileHelper
             mkdir(PATH_IMAGE . "Image/$id", 0755, true);
         }
     }
+
+
 }

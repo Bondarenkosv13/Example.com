@@ -22,7 +22,13 @@ class PostsController
 
     public function index()
     {
-        echo "PostsController method index";
+        $this->before();
+        $post= new Post();
+        $posts = $post->getPostByUserId($_SESSION['user_data']['id']);
+        View::render('Parts/header.php', ['title' => 'Posts admin']);
+        View::render('Post/index.php', ['posts'=> $posts]);
+        View::render('Parts/footer.php');
+        die();
     }
     public function create()
     {
@@ -31,6 +37,7 @@ class PostsController
         View::render('Parts/header.php', ['title' => 'Create post']);
         View::render('Post/create.php');
         View::render('Parts/footer.php');
+        die();
 
     }
     public function store()
@@ -49,7 +56,7 @@ class PostsController
             View::render('Post/create.php', [
                 'error'   =>$error,
                 'title'   =>$fields['title'],
-                'content' =>$fields['content']
+                'content' =>$fields['content'],
             ]);
             View::render('Parts/footer.php');
             die();
@@ -75,15 +82,87 @@ class PostsController
     }
     public function update($id)
     {
-        echo "PostsController method update and params $id";
+//        $this->before();
+//        $fields = $_POST;
+//        $postValidator = new CreatePostValidator();
+//        $post= new Post();
+//        $posts = $post->getPostById($id)[0];
+//        /**
+//         * Valid the title and the content in post update
+//         */
+//        if(!$postValidator->storeValidation($fields))
+//        {
+//            $error = $postValidator->getErrors();
+//
+//            View::render('Parts/header.php', ['title' => 'Edit post']);
+//            View::render('Post/edit.php', [
+//                'error'   => $error,
+//                'title'   => $fields['title'],
+//                'content' => $fields['content'],
+//                'image'   => $posts['image'],
+//                'id'      => $id
+//            ]);
+//            View::render('Parts/footer.php');
+//            die();
+//        }
+//        /**
+//         * Valid image in post update (image must be added)
+//         */
+//        if($postValidator->imageValidation($_FILES))
+//        {
+//            View::render('Parts/header.php', ['title' => 'Edit post']);
+//            View::render('Post/edit.php', [
+//                'title'   => $fields['title'],
+//                'content' => $fields['content'],
+//                'image'   => $posts['image'],
+//                'id'      => $id
+//            ]);
+//            View::render('Parts/footer.php');
+//            die();
+//        }
+//
+//        $file = new FileHelper();
+//        $pathImage = $file->upload($_FILES['image']);
+//        $file->remove($posts['image']);
+//        $fields['image'] = $pathImage;
+//        $fields['user_id']    = SessionHelper::getUserId();
+//
+//        $this->post->updatePost($fields);
+//        way('posts/' . $id);
+
     }
     public function edit($id)
     {
-        echo "PostsController method edit and params $id";
+        $this->before();
+
+        $post= new Post();
+        $posts = $post->getPostById($id)[0];
+
+        View::render('Parts/header.php', ['title' => 'Edit post']);
+        View::render('Post/edit.php', [
+            'title'     => $posts['title'],
+            'content'   => $posts['content'],
+            'image'     => $posts['image'],
+            'id'        => $posts['id']
+        ]);
+        View::render('Parts/footer.php');
+        die();
     }
     public function delete($id)
     {
-        echo "PostsController method delete and params $id";
+        $this->before();
+        $posts= new Post();
+        $post = $posts->getPostById($id)[0];
+        $posts->deletePost($id);
+
+
+        $file = new FileHelper();
+        $file->remove($post['image']);
+
+
+        way('posts');
+        exit();
+
     }
     public function show($id)
     {
