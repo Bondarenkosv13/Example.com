@@ -49,5 +49,13 @@ class User extends Model
         return $userParams[0];
     }
 
+    public function updatePassword($password, $id)
+    {
+        $sql = "UPDATE `{$this->table}` 
+                SET `password`=:password WHERE id=:id";
+        $user = $this->dbh->prepare($sql);
+        $user->execute(['password' => $password, 'id' => $id]);
+    }
+
 
 }

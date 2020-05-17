@@ -37,6 +37,9 @@
                     <a class="nav-link text-white"><?php print_r($_SESSION['user_data']['first_name']); ?></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/user/password">change password</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">exit</a>
                 </li>
                 <li class="nav-item">

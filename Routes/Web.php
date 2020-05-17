@@ -9,8 +9,11 @@ $route->add('registration', ['controller' => 'AuthController', 'action' => 'regi
 $route->add('auth', ['controller' => 'AuthController', 'action' => 'verify']);
 $route->add('logout', ['controller' => 'AuthController', 'action' => 'logout']);
 
+
 //User
 $route->add('user/store', ['controller' => 'UserController', 'action' => 'store']);
+$route->add('user/password', ['controller' => 'UserController', 'action' => 'password']);
+$route->add('user/update', ['controller' => 'UserController', 'action' => 'update']);
 
 //Post
 $route->add('posts', ['controller' => 'PostsController', 'action' => 'index']);

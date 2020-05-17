@@ -6,11 +6,12 @@ use App\Helpers\SessionHelper;
 use App\Models\Post;
 use App\Models\User;
 use App\Validation\Post\CreatePostValidator;
+use Core\Controller;
 use Core\View;
 
 include_once dirname(__DIR__) . '/../Config/function.php';
 include_once dirname(__DIR__) . '/../Config/constant.php';
-class PostsController
+class PostsController extends Controller
 {
 
     private $post;
@@ -82,58 +83,60 @@ class PostsController
     }
     public function update($id)
     {
-//        $this->before();
-//        $fields = $_POST;
-//        $postValidator = new CreatePostValidator();
-//        $post= new Post();
-//        $posts = $post->getPostById($id)[0];
-//        /**
-//         * Valid the title and the content in post update
-//         */
-//        if(!$postValidator->storeValidation($fields))
-//        {
-//            $error = $postValidator->getErrors();
-//
-//            View::render('Parts/header.php', ['title' => 'Edit post']);
-//            View::render('Post/edit.php', [
-//                'error'   => $error,
-//                'title'   => $fields['title'],
-//                'content' => $fields['content'],
-//                'image'   => $posts['image'],
-//                'id'      => $id
-//            ]);
-//            View::render('Parts/footer.php');
-//            die();
-//        }
-//        /**
-//         * Valid image in post update (image must be added)
-//         */
-//        if($postValidator->imageValidation($_FILES))
-//        {
-//            View::render('Parts/header.php', ['title' => 'Edit post']);
-//            View::render('Post/edit.php', [
-//                'title'   => $fields['title'],
-//                'content' => $fields['content'],
-//                'image'   => $posts['image'],
-//                'id'      => $id
-//            ]);
-//            View::render('Parts/footer.php');
-//            die();
-//        }
-//
-//        $file = new FileHelper();
-//        $pathImage = $file->upload($_FILES['image']);
-//        $file->remove($posts['image']);
-//        $fields['image'] = $pathImage;
-//        $fields['user_id']    = SessionHelper::getUserId();
-//
-//        $this->post->updatePost($fields);
-//        way('posts/' . $id);
+        $this->before();
+        $this->checkUser($id);
+        $fields = $_POST;
+        $postValidator = new CreatePostValidator();
+        $post= new Post();
+        $posts = $post->getPostById($id)[0];
+        /**
+         * Valid the title and the content in post update
+         */
+        if(!$postValidator->storeValidation($fields))
+        {
+            $error = $postValidator->getErrors();
+
+            View::render('Parts/header.php', ['title' => 'Edit post']);
+            View::render('Post/edit.php', [
+                'error'   => $error,
+                'title'   => $fields['title'],
+                'content' => $fields['content'],
+                'image'   => $posts['image'],
+                'id'      => $id
+            ]);
+            View::render('Parts/footer.php');
+            die();
+        }
+        /**
+         * Valid image in post update (image must be added)
+         */
+        if($postValidator->imageValidation($_FILES))
+        {
+            View::render('Parts/header.php', ['title' => 'Edit post']);
+            View::render('Post/edit.php', [
+                'title'   => $fields['title'],
+                'content' => $fields['content'],
+                'image'   => $posts['image'],
+                'id'      => $id
+            ]);
+            View::render('Parts/footer.php');
+            die();
+        }
+
+        $file = new FileHelper();
+        $pathImage = $file->upload($_FILES['image']);   //записывает картинку в папку
+        $file->remove($posts['image']);                 //удаляет старую картинку
+        $fields['image'] = $pathImage;
+        $fields['id']    = $id;
+
+        $this->post->updatePost($fields);
+        way('posts/' . $id);
 
     }
     public function edit($id)
     {
         $this->before();
+        $this->checkUser($id);
 
         $post= new Post();
         $posts = $post->getPostById($id)[0];
@@ -151,6 +154,7 @@ class PostsController
     public function delete($id)
     {
         $this->before();
+        $this->checkUser($id);
         $posts= new Post();
         $post = $posts->getPostById($id)[0];
         $posts->deletePost($id);
@@ -184,15 +188,16 @@ class PostsController
     }
 
     /**
-     * lick at home if user doesn't login
+     * link at home if article isn't users login
      */
-    public function before()
+    public function checkUser($id)
     {
-        if(SessionHelper::isUserLoggedIn())
+        $post = new Post();
+        $post = $post->getPostById($id)[0]['user_id'];
+        if($post !== SessionHelper::getUserId())
         {
-            $_SESSION['notification'] = 'To view this page you need to log in!';
+            $_SESSION['notification'] = '404 error! This page wasn\'t find!';
             way('');
         }
-
     }
 }

@@ -2,7 +2,10 @@
 namespace App\Validation;
 
 
+use App\Helpers\SessionHelper;
+use App\Models\User;
 use Core\Validator;
+include_once dirname(__DIR__) . '/../Config/function.php';
 
 class UserValidator extends Validator
 {
@@ -24,14 +27,16 @@ class UserValidator extends Validator
 
     public function storeValidation ($fields)
     {
-        foreach ($fields as $key => $field)
-        {
-            if(preg_match($this->rules[$key], $field))
-            {
-                unset($this->errors["{$key}_error"]);
+        if($fields != null) {
+            foreach ($fields as $key => $field) {
+                if (preg_match($this->rules[$key], $field)) {
+                    unset($this->errors["{$key}_error"]);
+                }
             }
+            return empty($this->errors);
+        } else {
+            way('');
         }
-        return empty($this->errors);
     }
 
     public function validatorEmail ($userParams, $email)
@@ -56,5 +61,14 @@ class UserValidator extends Validator
             }
         }
         return false;
+    }
+
+    public function ValidatorPassword($password)
+    {
+        if(!password_verify($password, $_SESSION['user_data']['password']))
+        {
+            $_SESSION['error'] = "Wrong the old password!";
+            return true;
+        }
     }
 }

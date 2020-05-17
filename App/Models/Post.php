@@ -50,11 +50,11 @@ class Post extends Model
 
     public function updatePost($fields)
     {
-        $sql = "UPDATE `{$this->table}` SET (`title`, `content`, `image`)
-                VALUES (:title, :content, :image)";
+        $sql = "UPDATE `{$this->table}` 
+                SET `title`=:title,`content`=:content,`image`=:image,`created_at`= CURRENT_TIMESTAMP 
+                WHERE id=:id";
         $user = $this->dbh->prepare($sql);
         $user->execute($fields);
-        return $this->dbh->lastInsertId();
     }
 
     public function deletePost($id)
