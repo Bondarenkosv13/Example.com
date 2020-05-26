@@ -45,16 +45,16 @@ class UserController extends Controller
         };
     }
 
-    public function password()
+    public function changePassword()
     {
         $this->before();
         View::render('Parts/header.php', ['title' => 'Update password']);
-        View::render('Auth/password.php');
+        View::render('Auth/changePassword.php');
         View::render('Parts/footer.php');
 
     }
 
-    public function update()
+    public function updatePassword()
     {
         $this->before();
         foreach ($_POST as $key => $value)
@@ -63,7 +63,7 @@ class UserController extends Controller
             if($fields[$key] == null){
                 $_SESSION['error'] = "Fill in all the fields";
                 View::render('Parts/header.php', ['title' => 'Update password']);
-                View::render('Auth/password.php');
+                View::render('Auth/changePassword.php');
                 View::render('Parts/footer.php');
                 die();
             }
@@ -73,7 +73,7 @@ class UserController extends Controller
         if($UserValidator->ValidatorPassword($oldPassword))
         {
             View::render('Parts/header.php', ['title' => 'Update password']);
-            View::render('Auth/password.php');
+            View::render('Auth/changePassword.php');
             View::render('Parts/footer.php');
             die();
         }
@@ -82,7 +82,7 @@ class UserController extends Controller
         {
             $_SESSION['error'] = "Password mismatch";
             View::render('Parts/header.php', ['title' => 'Update password']);
-            View::render('Auth/password.php');
+            View::render('Auth/changePassword.php');
             View::render('Parts/footer.php');
             die();
         }
@@ -98,7 +98,66 @@ class UserController extends Controller
          * path - Config/function
          */
         way('');
+    }
 
+    public function changeName()
+    {
+        $data = $_SESSION['user_data'] ?? null;
+        $this->before();
+        View::render('Parts/header.php', ['title' => 'Update name']);
+        View::render('Auth/changeName.php', ['data' => $data]);
+        View::render('Parts/footer.php');
+    }
+    public function updateName()
+    {
+        $this->before();
+        foreach ($_POST as $key => $value)
+        {
+            $fields[$key] = trim($value);
+        }
+        $userValidation = new UserValidator();
+        $user = new User();
+        $userParams = $user->checkAll();
+        $fields = $fields ?? null;
 
+        if($userValidation->ValidatorPassword($fields['password']))
+        {
+            $data = $fields ?? null;
+            $error['password'] = 'Invalid password!';
+
+            View::render('Parts/header.php', ['title' => 'Update name']);
+            View::render('Auth/changeName.php', ['data' => $data, 'error' => $error]);
+            View::render('Parts/footer.php');
+            die();
+        }
+
+        $fields['password'] = $_SESSION['user_data']['password'];
+
+        if ($userValidation->storeValidation($fields) && $userValidation->validatorEmail($userParams, $fields['email']))
+        {
+            $id = $_SESSION['user_data']['id'];
+            $user->updateUser($fields, $id);
+
+            /**
+             * way - function header('Location: ...')
+             * path - Config/function
+             */
+            $_SESSION['user_data']['first_name'] = $fields['first_name'];
+            $_SESSION['user_data']['last_name']  = $fields['last_name'];
+            $_SESSION['user_data']['email']      = $fields['email'];
+            $_SESSION['user_data']['birthday']   = $fields['birthday'];
+            way(' ');
+        }
+        else {
+
+            $error = $userValidation->getErrors();
+            $data = $_SESSION['user_data'] ?? null;
+
+            View::render('Parts/header.php', ['title' => 'Update name']);
+            View::render('Auth/changeName.php', ['data' => $data, 'error' => $error]);
+            View::render('Parts/footer.php');
+
+            die();
+        };
     }
 }

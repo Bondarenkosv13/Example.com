@@ -5,7 +5,7 @@
             unset($_SESSION['error']);?></div >
     <?php }?>
     <h1 class="text-center">Update password</h1>
-    <form method="POST" action="/user/update">
+    <form method="POST" action="/user/updatePassword">
         <div class="form-group">
             <label for="form-group">Write the old password</label>
             <input type="password"

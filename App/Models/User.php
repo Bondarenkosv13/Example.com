@@ -57,5 +57,17 @@ class User extends Model
         $user->execute(['password' => $password, 'id' => $id]);
     }
 
-
+    public function updateUser($fields, $id)
+    {
+        $sql = "UPDATE `{$this->table}` 
+                SET `first_name`=:first_name, `last_name`=:last_name, email=:email, birthday=:birthday WHERE id=:id";
+        $user = $this->dbh->prepare($sql);
+        $user->execute([
+            'first_name' => $fields['first_name'],
+            'last_name' => $fields['last_name'],
+            'email' => $fields['email'],
+            'birthday' => $fields['birthday'],
+            'id' => $id
+        ]);
+    }
 }

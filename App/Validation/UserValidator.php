@@ -29,6 +29,7 @@ class UserValidator extends Validator
     {
         if($fields != null) {
             foreach ($fields as $key => $field) {
+
                 if (preg_match($this->rules[$key], $field)) {
                     unset($this->errors["{$key}_error"]);
                 }

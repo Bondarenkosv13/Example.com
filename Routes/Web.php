@@ -12,8 +12,10 @@ $route->add('logout', ['controller' => 'AuthController', 'action' => 'logout']);
 
 //User
 $route->add('user/store', ['controller' => 'UserController', 'action' => 'store']);
-$route->add('user/password', ['controller' => 'UserController', 'action' => 'password']);
-$route->add('user/update', ['controller' => 'UserController', 'action' => 'update']);
+$route->add('user/changePassword', ['controller' => 'UserController', 'action' => 'changePassword']);
+$route->add('user/updatePassword', ['controller' => 'UserController', 'action' => 'updatePassword']);
+$route->add('user/changeName', ['controller' => 'UserController', 'action' => 'changeName']);
+$route->add('user/updateName', ['controller' => 'UserController', 'action' => 'updateName']);
 
 //Post
 $route->add('posts', ['controller' => 'PostsController', 'action' => 'index']);
